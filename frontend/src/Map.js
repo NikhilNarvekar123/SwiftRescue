@@ -8,6 +8,7 @@
 // } from "react-google-maps";
 import { useMemo } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import "./App.css";
 
 // const MapComponent = withScriptjs(
 //     withGoogleMap((props) => 
@@ -29,28 +30,17 @@ import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 
 function Map(props) {
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: 'AIzaSyBLidBefVNHdhbWqWNPeQtFOB2N5tRxj7s',
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
       });
-      const center = useMemo(() => ({ lat: 18.52043, lng: 73.856743 }), []);
+    //   const center = useMemo(() => ({ lat: 18.52043, lng: 73.856743 }), []);
   return (
     <div className="Map">
-      {/* <Header/> */}
-      {/* <script> */}
-      {/* <MapComponent
-                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLidBefVNHdhbWqWNPeQtFOB2N5tRxj7s"
-                loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={<div style={{ height: `100vh` }} />}
-                mapElement={<div style={{ height: `100%` }} />}
-                center={props.currentCenter}
-                markers={props.locations}
-            /> */}
-            {/* </script> */}
             {!isLoaded ? (
         <h1>Loading...</h1>
       ) : (
         <GoogleMap
           mapContainerClassName="map-container"
-          center={center}
+          center={props.center}
           zoom={10}
         />
       )}
