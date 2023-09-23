@@ -12,17 +12,10 @@ function App() {
   const [temp, setTemp] = useState([])
   const [isLocalToggle, setIsLocalToggle] = useState(true)
 
-  // get alert data from tomorrow
-  useEffect(() => {
-    axios.get(``)
-    .then(res => {
-      const persons = res.data;
-      this.setState({ persons });
-    })
-  }, [])
-
   // get disaster, news, and event data from firebase
   useEffect(() => {
+
+
 
   }, [])
 
@@ -70,6 +63,9 @@ function App() {
               <FeedCard
               image_link='https://i.natgeofe.com/k/1de5cea7-d299-4684-9ab0-b14c84600136/Palm-Trees_Hurricane-Update_KIDS_0822_square.jpg'
               key={index}
+              type={'event'}
+              title={'Sample Title'}
+              description={'Lorem Ipsum'}
               ></FeedCard>
               <br/>
               </>

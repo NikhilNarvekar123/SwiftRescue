@@ -1,6 +1,5 @@
 import DashboardHeader from './components/DashboardHeader';
-import db from "../firebase.js";
-import { collection, addDoc } from "firebase/firestore";
+import { db } from "../firebase";
 import { useState } from 'react';
 
 function Dashboard() {
@@ -8,14 +7,14 @@ function Dashboard() {
     const addTodo = async (e) => {
         e.preventDefault();  
        
-        try {
-            const docRef = await addDoc(collection(db, "todos"), {
-              todo: "hi",    
-            });
-            console.log("Document written with ID: ", docRef.id);
-          } catch (e) {
-            console.error("Error adding document: ", e);
-          }
+        // try {
+        //     const docRef = await addDoc(collection(db, "todos"), {
+        //       todo: "hi",    
+        //     });
+        //     console.log("Document written with ID: ", docRef.id);
+        //   } catch (e) {
+        //     console.error("Error adding document: ", e);
+        //   }
     }
 
   return (
