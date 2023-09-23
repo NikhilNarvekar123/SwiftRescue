@@ -3,14 +3,20 @@ import './App.css';
 import Header from './Header';
 import Map from './Map';
 
-const center = { lat: 48.8584, lng: 2.2945 }
+const center = { lat: 29.7174, lng: -95.4018 }
+const markers = [
+  { lat: 29.7174, lng: -95.4018 },
+  { lat: 29.8174, lng: -95.4118 },
+  { lat: 29.9174, lng: -95.4218 },
+];
 
 function App() {
+
   return (
     <div className="App">
       <Header/>
-      <Map currentCenter={center}
-        locations={[]}
+      <Map center={center}
+        markers={markers}
       />
     </div>
   );
