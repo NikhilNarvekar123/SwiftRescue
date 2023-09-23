@@ -8,4 +8,3 @@ Data Sources:
 - Dam data: http://globaldamwatch.org/grand/ - proximity to dams
 - Forest loss data: https://earthenginepartners.appspot.com/science-2013-global-forest/download_v1.7.html
 - Street/infrastructure presence data: https://www.openstreetmap.org/
-  n
