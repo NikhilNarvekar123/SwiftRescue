@@ -4,12 +4,32 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import MapPage from './mobilepages/MapPage';
+import Notification from './mobilepages/Notification';
+import Settings from './mobilepages/Settings';
+import Landing from './Landing';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
+    element: <Landing/>
+  },
+  {
+    path: "/app",
     element: <App/>
-  }
+  },
+  {
+    path: "/map",
+    element: <MapPage/>
+  },
+  {
+    path: "/notification",
+    element: <Notification/>
+  },
+  {
+    path: "/settings",
+    element: <Settings/>
+  },
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
