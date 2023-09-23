@@ -8,6 +8,8 @@ import MapPage from './mobilepages/MapPage';
 import Notification from './mobilepages/Notification';
 import Settings from './mobilepages/Settings';
 import Landing from './Landing';
+import Dashboard from './dashboardpages/Dashboard';
+import MapResponder from './dashboardpages/MapResponder';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,14 @@ const router = createBrowserRouter([
   {
     path: "/settings",
     element: <Settings/>
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard/>
+  },
+  {
+    path: "/dashboardmap",
+    element: <MapResponder/>
   },
 ])
 
