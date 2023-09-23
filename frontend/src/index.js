@@ -10,6 +10,8 @@ import Settings from './mobilepages/Settings';
 import Landing from './Landing';
 import Dashboard from './dashboardpages/Dashboard';
 import MapResponder from './dashboardpages/MapResponder';
+import CardFullPage from './mobilepages/CardFullPage'
+import AccountCreationPage from './mobilepages/AccountCreationPage';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,14 @@ const router = createBrowserRouter([
     path: "/dashboardmap",
     element: <MapResponder/>
   },
+  {
+    path: "/card/:id",
+    element: <CardFullPage/>
+  },
+  {
+    path: '/accountcreation',
+    element: <AccountCreationPage/>
+  }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
