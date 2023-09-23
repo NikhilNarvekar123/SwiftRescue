@@ -14,7 +14,8 @@ function Map(props) {
     // const { isLoaded } = useLoadScript({
     //     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     //   });
-    console.log(props)
+    // console.log("props")
+    // console.log(props)
       const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
@@ -30,6 +31,7 @@ function Map(props) {
         const bounds = new window.google.maps.LatLngBounds(props.center);
 
         map.fitBounds(bounds);
+        // map.setZoom(props.zoom)
 
         for (var i = 0; i < props.markers.length; i++) {
             var latLng = props.markers[i]
@@ -72,7 +74,7 @@ function Map(props) {
         <GoogleMap
         mapContainerStyle={containerStyle}
         center={props.center}
-        zoom={10}
+        zoom={props.zoom}
         onLoad={onLoad}
         onUnmount={onUnmount}
       >
