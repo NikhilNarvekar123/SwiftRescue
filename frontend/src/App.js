@@ -10,9 +10,8 @@ function App() {
     <div className="App">
       <Header/>
       <Map currentCenter={center}
-      locations={[]}
+        locations={[]}
       />
-
     </div>
   );
 }
