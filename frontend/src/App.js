@@ -127,7 +127,7 @@ function App() {
 
   // update the feed whenever toggle is pressed
   useEffect(() => {
-    // console.log('updated')
+    // console.log('updanpmted')
   }, [isLocalToggle])
 
 

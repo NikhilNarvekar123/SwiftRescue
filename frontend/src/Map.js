@@ -2,13 +2,18 @@ import { GoogleMap, Marker, useJsApiLoader, DirectionsService, DirectionsRendere
 import "./App.css";
 import React, { useState } from 'react'
 import { useEffect } from "react";
+import pic from './susmap.png';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const containerStyle = {
-    height: '700px',
-    width: '700px',
-    marginTop: '50px',
+    height: '600px',
+    width: '1075px',
+    marginTop: '30px',
     marginRight: 'auto',
     marginLeft:'auto',
+    border: '2px solid',
+    borderColor: '#777777',
+    borderRadius: '10px'
   };
   
 function Map(props) {
@@ -108,7 +113,7 @@ function Map(props) {
       }, [map, props.markers]);
 
   return (
-    <div className="Map">
+    <div className="">
             {!isLoaded ? (
         <h1>Loading...</h1>
       ) : (
@@ -125,6 +130,22 @@ function Map(props) {
         <></>
       </GoogleMap>
       )}
+
+<br/>
+<div className='mx-36 my-0'>
+
+<div className='flex justify-end w-full mr-36'>
+  <span className="self-center text-md font-bold whitespace-nowrap">Susceptibility Map</span>
+</div>
+
+<br/>
+<TransformWrapper>
+  <TransformComponent>
+    <img src={pic} alt="test" />
+  </TransformComponent>
+</TransformWrapper>
+</div>
+
     </div>
   );
 }
