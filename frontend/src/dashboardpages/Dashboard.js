@@ -31,6 +31,10 @@ function Dashboard() {
     });
   }, []);
 
+  useEffect(() => {
+    
+  }, [floodMarkers]);
+
   const handleChange = (e) => {
     e.preventDefault();
     setSearchInput(e.target.value);
@@ -60,21 +64,27 @@ function Dashboard() {
     }
 
   const findNearbyFloods = (param) => {
+    setFloodsLoaded(false)
     setFloodMarkers([])
+    console.log("coords", param)
     const query = ref(db, "dashboard_floods");
     return onValue(query, (snapshot) => {
       const data = snapshot.val();
-
+        var markers = []
       if (snapshot.exists()) {
         Object.values(data).map((flood) => {
-            var dist = calculateDistance(center.lat, center.lng, flood.lat, flood.lon)
+            var dist = calculateDistance(param.lat, param.lng, flood.lat, flood.lon)
           if (dist < 500) {
-            setFloodMarkers((floodMarkers) => [...floodMarkers, {lat: flood.lat, lng: flood.lon}]);
+            console.log("add marker")
+            markers.push({lat: flood.lat, lng: flood.lon})
+            // setFloodMarkers((floodMarkers) => [...floodMarkers, {lat: flood.lat, lng: flood.lon}]);
           }
         //   setFloodMarkers((floodMarkers) => [...floodMarkers, {lat: flood.lat, lng: flood.lon}]);
         });
         // setFloodsLoaded(true)
       }
+    //   setSomeMarkers(markers)
+    setFloodMarkers(markers)
     });
   }
 
@@ -83,9 +93,11 @@ function Dashboard() {
         try {
             console.log(searchInput)
             const data = await (await fetch(`https://geocode.maps.co/search?q=` + searchInput)).json()
-            setCenter({lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon)})
-            findNearbyFloods(center)
-            console.log(center)
+            const latLng = {lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon)}
+            console.log(searchInput, latLng)
+            findNearbyFloods(latLng)
+            setCenter(latLng)
+            // setFloodMarkers(someMarkers)
         } catch (err) {
             console.log(err.message)
         }
@@ -94,7 +106,8 @@ function Dashboard() {
     setFloodsLoaded(true)
   };
 
-  console.log(floodMarkers)
+  console.log("center", center)
+  console.log("markers", floodMarkers)
   return (
     <div className="App">
         <DashboardHeader/>

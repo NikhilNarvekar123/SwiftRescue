@@ -11,11 +11,6 @@ const containerStyle = {
   };
   
 function Map(props) {
-    // const { isLoaded } = useLoadScript({
-    //     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-    //   });
-    // console.log("props")
-    // console.log(props)
       const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
