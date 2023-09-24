@@ -160,6 +160,9 @@ function MapRoute(props) {
               },
             }}
           />
+          {props.markers.map(({ lat, lng }) => (
+            <Marker position={{ lat, lng }} />
+          ))}
       </GoogleMap>
       )}
     </div>

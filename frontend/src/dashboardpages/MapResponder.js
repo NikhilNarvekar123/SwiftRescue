@@ -108,28 +108,31 @@ function MapResponder() {
         center={center}
         markers={userMarkers}
       /> */}
-    {/* {userMap ? <Map 
+    {userMap ? (
+  <Map 
+    center={center}
+    markers={userMarkers}
+  />
+) : (
+  <MapRoute
+    center={center}
+    markers={userMarkers}
+    route={customRoute}
+  />
+)}
+<Toggle
+  defaultChecked={userMap}
+  onChange={() => setUserMap(!userMap)} // Use a function to set the state
+/>
+       {/* <Map 
         center={center}
         markers={userMarkers}
-      /> : 
+      />
       <MapRoute
         center={center}
         markers={userMarkers}
         route={customRoute}
-      />}
-      <Toggle
-      defaultChecked={userMap}
-      onChange={setUserMap(false)}
       /> */}
-       <Map 
-        center={center}
-        markers={userMarkers}
-      />
-      <MapRoute
-        center={center}
-        markers={userMarkers}
-        route={customRoute}
-      />
       </div>
     }
     </div>
