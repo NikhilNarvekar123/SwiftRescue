@@ -89,7 +89,7 @@ async def find_shortest_path(
     body = unquote(body.decode("utf-8"))
     body = json.loads(body)
     
-    coordinates = body["coordinates"]
+    coordinates = body["cluster_coordinates"]
     start_coord = tuple(body["start_coord"])
     end_coord = tuple(body["end_coord"])
 
