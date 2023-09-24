@@ -91,7 +91,6 @@ async def find_shortest_path(
     
     coordinates = body["cluster_coordinates"]
     start_coord = tuple(body["start_coord"])
-    end_coord = tuple(body["end_coord"])
 
     print('get request for shortest path')
     print("coords:", str(coordinates))
