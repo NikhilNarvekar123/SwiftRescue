@@ -16,6 +16,17 @@ const containerStyle = {
     borderRadius: '10px'
   };
 
+  const smallmargin = {
+    height: '600px',
+    width: '1075px',
+    marginTop: '0px',
+    marginRight: 'auto',
+    marginLeft:'auto',
+    border: '2px solid',
+    borderColor: '#777777',
+    borderRadius: '10px'
+  };
+
 const mobileContainer = {
   height: '600px',
   width: '100%',
@@ -126,7 +137,7 @@ function Map(props) {
         <h1>Loading...</h1>
       ) : (
         <GoogleMap
-        mapContainerStyle={props.ForMobile ? mobileContainer : containerStyle}
+        mapContainerStyle={props.ForMobile ? mobileContainer : (props.MoreMargin ? smallmargin : containerStyle)}
         center={props.center}
         zoom={10}
         onLoad={onLoad}

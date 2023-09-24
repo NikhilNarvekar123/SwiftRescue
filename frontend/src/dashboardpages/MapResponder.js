@@ -29,6 +29,8 @@ function MapResponder() {
     const [route_length, setLength] = useState(0)
     const [foundRoute, setFoundRoute] = useState(false)
 
+    const [usersVisible, setUsersVisible] = useState(false);
+
 //     const customRoute = [
 //         // { lat: 29.7174, lng: -95.3918 },
 // //   { lat: 29.7074, lng: -95.4018 },
@@ -176,7 +178,10 @@ function MapResponder() {
         }
 
       const findNearbyUsers = () => {
+        
+        
         // setFloodsLoaded(false)
+
         setUserMarkers([])
         var param = center
         // console.log("coords", param)
@@ -216,13 +221,41 @@ function MapResponder() {
       console.log("waypoint", route_waypoints)
 
   return (
+    
     <div className="App">
       <DashboardHeader/>
-      <div>
-          <button type="submit" onClick={findNearbyUsers}>
-            Find users
-          </button>
-          </div>
+      <br/>
+      <div className='w-full flex justify-start'>
+        <div className='flex justify-end w-full mr-36'>
+        <span className="text-md font-bold whitespace-nowrap">Rescue Routing</span>
+        </div>
+      </div>
+
+      <div className='w-full flex justify-center'>
+      <div className='grid grid-rows-2 w-1/2'>
+
+        <div className='w-full flex justify-center mb-8'>
+            <button
+              type="submit"
+              onClick={findNearbyUsers}
+              class="border border-indigo-500 bg-indigo-500 text-white rounded-md px-4 py-2 transition duration-500 ease select-none hover:bg-indigo-600 focus:outline-none focus:shadow-outline"
+            >Find Users</button>
+        </div>
+        {/* <Toggle
+          defaultChecked={userMap}
+          onChange={() => setUserMap(!userMap)} // Use a function to set the state
+        /> */}
+
+        <div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" value="" onChange={() => setUserMap(!userMap)} class="sr-only peer"/>
+          <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+          <span class="ml-3 text-sm font-medium text-black">Show Optimized Route</span>
+        </label>
+        </div>
+
+        </div>
+        </div>
 
           <div>{console.log("route here", route)}</div>
           <div>{console.log("custom here", customRoute)}</div>
@@ -237,6 +270,7 @@ function MapResponder() {
   <Map 
     center={center}
     markers={userMarkers}
+    MoreMargin={true}
   />
 ) : (
   <MapRoute
@@ -245,10 +279,6 @@ function MapResponder() {
     route={route}
   />
 )}
-<Toggle
-  defaultChecked={userMap}
-  onChange={() => setUserMap(!userMap)} // Use a function to set the state
-/>
        {/* <Map 
         center={center}
         markers={userMarkers}
