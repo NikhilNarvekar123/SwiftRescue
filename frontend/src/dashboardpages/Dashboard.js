@@ -14,8 +14,6 @@ function Dashboard() {
     const [floodsLoaded, setFloodsLoaded] = useState(false);
     const [searchInput, setSearchInput] = useState("");
 
-    const [someMarkers, setSomeMarkers] = useState([]);
-
   useEffect(() => {
     const query = ref(db, "dashboard_floods");
     return onValue(query, (snapshot) => {
@@ -67,7 +65,7 @@ function Dashboard() {
     for (var i = 0; i < floods.length; i++) {
         var flood = floods[i]
         var dist = calculateDistance(param.lat, param.lng, flood.lat, flood.lon)
-        if (dist < 100) { // 100 km
+        if (dist < 200) { // 100 km
                     console.log("add marker")
                     markers.push({lat: flood.lat, lng: flood.lon})
                     // setFloodMarkers((prevMarkers) => [...prevMarkers, { lat: flood.lat, lng: flood.lon }]);
@@ -150,7 +148,6 @@ function Dashboard() {
     <Map center={center}
         markers={floodMarkers}
       />
-    // {mapz}
     }
 
     </div>

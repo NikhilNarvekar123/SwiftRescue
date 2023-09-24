@@ -29,21 +29,26 @@ function Map(props) {
         map.fitBounds(bounds);
         // map.setZoom(10)
           console.log("props center", props.center)
+          console.log("props", props)
         for (var i = 0; i < props.markers.length; i++) {
-            var latLng = props.markers[i]
+            console.log(props.markers[i].lat)
+            var prop = props.markers[i]
+            var lat = prop.lat
+            var lng = prop.lng
+            var latLng = {lat: lat, lng: lng}
             // Creating a marker and putting it on the map
             console.log("latling")
             var marker = new window.google.maps.Marker({
                 position: latLng,
                 map: map,
-                title: "Hello"
+                title: prop.notes
             });
             window.google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
                 return function() {
                     infowindow.setContent(content);
                     infowindow.open(map,marker);
                 };
-            })(marker,"hi",infowindow));  
+            })(marker, prop.notes,infowindow));  
             // marker.addListener("click", () => {
             //     infowindow.setContent("Hi");
             //     infowindow.open({
@@ -55,7 +60,6 @@ function Map(props) {
               bounds.extend(latLng)
 
         }
-        console.log("props marker", props.markers)
     
         setMap(map)
       }, [])
@@ -66,7 +70,7 @@ function Map(props) {
 
       useEffect(() => {
         if (map) {
-          const bounds = new window.google.maps.LatLngBounds();
+          const bounds = new window.google.maps.LatLngBounds(props.center);
           props.markers.map(marker => {
             bounds.extend({
               lat: marker.lat,
@@ -74,6 +78,7 @@ function Map(props) {
             });
           });
           map.fitBounds(bounds);
+          map.setZoom(10)
         }
       }, [map, props.markers]);
 
