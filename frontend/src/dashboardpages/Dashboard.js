@@ -1,7 +1,7 @@
 import DashboardHeader from './components/DashboardHeader';
 import { db } from "../firebase";
 import { onValue, ref } from "firebase/database";
-import { useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import Map from '../Map';
 
 
@@ -30,10 +30,6 @@ function Dashboard() {
       }
     });
   }, []);
-
-  useEffect(() => {
-    
-  }, [floodMarkers]);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -67,26 +63,53 @@ function Dashboard() {
     setFloodsLoaded(false)
     setFloodMarkers([])
     console.log("coords", param)
-    const query = ref(db, "dashboard_floods");
-    return onValue(query, (snapshot) => {
-      const data = snapshot.val();
-        var markers = []
-      if (snapshot.exists()) {
-        Object.values(data).map((flood) => {
-            var dist = calculateDistance(param.lat, param.lng, flood.lat, flood.lon)
-          if (dist < 500) {
-            console.log("add marker")
-            markers.push({lat: flood.lat, lng: flood.lon})
-            // setFloodMarkers((floodMarkers) => [...floodMarkers, {lat: flood.lat, lng: flood.lon}]);
-          }
-        //   setFloodMarkers((floodMarkers) => [...floodMarkers, {lat: flood.lat, lng: flood.lon}]);
-        });
-        // setFloodsLoaded(true)
-      }
-    //   setSomeMarkers(markers)
-    setFloodMarkers(markers)
-    });
+    var markers = []
+    for (var i = 0; i < floods.length; i++) {
+        var flood = floods[i]
+        var dist = calculateDistance(param.lat, param.lng, flood.lat, flood.lon)
+        if (dist < 500) {
+                    console.log("add marker")
+                    markers.push({lat: flood.lat, lng: flood.lon})
+                    // setFloodMarkers((prevMarkers) => [...prevMarkers, { lat: flood.lat, lng: flood.lon }]);
+        }
+        setFloodMarkers(markers)
+    }
+    // const query = ref(db, "dashboard_floods");
+    // return onValue(query, (snapshot) => {
+    //   const data = snapshot.val();
+    //     var markers = []
+    //   if (snapshot.exists()) {
+    //     Object.values(data).map((flood) => {
+    //         var dist = calculateDistance(param.lat, param.lng, flood.lat, flood.lon)
+    //       if (dist < 500) {
+    //         console.log("add marker")
+    //         markers.push({lat: flood.lat, lng: flood.lon})
+    //         // setFloodMarkers((floodMarkers) => [...floodMarkers, {lat: flood.lat, lng: flood.lon}]);
+    //       }
+    //     //   setFloodMarkers((floodMarkers) => [...floodMarkers, {lat: flood.lat, lng: flood.lon}]);
+    //     });
+    //     // setFloodsLoaded(true)
+    //   }
+    // //   setSomeMarkers(markers)
+    // setFloodMarkers(markers)
+    // });
   }
+
+//   useEffect(() => {
+
+// const mapz = useMemo(() =>
+//  {
+//    return (<Map center={center}
+//         markers={floodMarkers}
+//       />)
+
+// })
+
+// const mapz = useMemo(() => {
+//     return (<Map center={center}
+//         markers={floodMarkers}
+//       />)
+// }, [floodMarkers])
 
   const geoCode = async () => {
     if (searchInput) {
@@ -121,12 +144,13 @@ function Dashboard() {
    <button type="submit" onClick={geoCode}>
             Submit
           </button>
-
+          {/* <div>{console.log({mapz})}</div> */}
     {!floodsLoaded ? 
     <h1>Finding Floods</h1> :
     <Map center={center}
         markers={floodMarkers}
       />
+    // {mapz}
     }
 
     </div>

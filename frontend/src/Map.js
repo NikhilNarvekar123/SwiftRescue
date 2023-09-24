@@ -1,6 +1,7 @@
 import { GoogleMap, Marker, useLoadScript, useJsApiLoader } from "@react-google-maps/api";
 import "./App.css";
 import React from 'react'
+import { useEffect } from "react";
 
 const containerStyle = {
     height: '700px',
@@ -26,11 +27,12 @@ function Map(props) {
         const bounds = new window.google.maps.LatLngBounds(props.center);
 
         map.fitBounds(bounds);
-        // map.setZoom(props.zoom)
-
+        // map.setZoom(10)
+          console.log("props center", props.center)
         for (var i = 0; i < props.markers.length; i++) {
             var latLng = props.markers[i]
             // Creating a marker and putting it on the map
+            console.log("latling")
             var marker = new window.google.maps.Marker({
                 position: latLng,
                 map: map,
@@ -53,6 +55,7 @@ function Map(props) {
               bounds.extend(latLng)
 
         }
+        console.log("props marker", props.markers)
     
         setMap(map)
       }, [])
@@ -60,6 +63,19 @@ function Map(props) {
       const onUnmount = React.useCallback(function callback(map) {
         setMap(null)
       }, [])
+
+      useEffect(() => {
+        if (map) {
+          const bounds = new window.google.maps.LatLngBounds();
+          props.markers.map(marker => {
+            bounds.extend({
+              lat: marker.lat,
+              lng: marker.lng,
+            });
+          });
+          map.fitBounds(bounds);
+        }
+      }, [map, props.markers]);
 
   return (
     <div className="Map">
@@ -69,13 +85,13 @@ function Map(props) {
         <GoogleMap
         mapContainerStyle={containerStyle}
         center={props.center}
-        zoom={props.zoom}
+        zoom={10}
         onLoad={onLoad}
         onUnmount={onUnmount}
       >
-        {/* {markers.map(({ lat, lng }) => (
+        {props.markers.map(({ lat, lng }) => (
             <Marker position={{ lat, lng }} />
-          ))} */}
+          ))}
         <></>
       </GoogleMap>
       )}
