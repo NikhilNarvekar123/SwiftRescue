@@ -7,6 +7,8 @@ import { db } from "../firebase";
 import { onValue, ref } from "firebase/database";
 import { useState, useEffect } from 'react';
 import Toggle from 'react-toggle'
+import axios from 'axios';
+
 
 const center = { lat: 29.7174, lng: -95.4018 }
 // const markers = [
@@ -21,6 +23,9 @@ function MapResponder() {
     const [userMarkers, setUserMarkers] = useState([]);
     const [floodsLoaded, setFloodsLoaded] = useState(false);
     const [userMap, setUserMap] = useState(true)
+    const [clusters, setClusters] = useState([])
+    const [route_waypoints, setWaypoints] = useState([])
+    const [route_length, setLength] = useState(0)
 
     const customRoute = [
         // { lat: 29.7174, lng: -95.3918 },
@@ -47,6 +52,60 @@ function MapResponder() {
         });
       
       }, []);
+
+      useEffect(() => {
+
+        const FetchData = async () => {
+          let coordinates = []
+          for (const user of users) {
+            coordinates.push([user['location']['lat'], user['location']['long']])
+          }
+
+          let data = [];
+          axios.post('https://shreyj1729--swift-rescue-compute-clusters.modal.run', {
+            "coordinates": coordinates,
+            "k": 50
+          })
+          .then(function (response) {
+            data = response;
+            setClusters(data['data']['cluster_locations'])
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+        }
+
+        if (users.length != 0) {
+          FetchData();
+        }
+
+      }, [users])  
+
+      useEffect(() => {
+        const FetchData = async () => {
+
+          let data = [];
+          axios.post('https://shreyj1729--swift-rescue-find-shortest-path-dev.modal.run', {
+            "cluster_coordinates": clusters,
+            "start_coord": [clusters[0][0], clusters[0][1]]
+          })
+          .then(function (response) {
+            data = response;
+            console.log(data['data'])
+            setWaypoints(data['data']['shortest_path'])
+            setLength(data['data']['shortest_path_length'])
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+        }
+
+        if (users.length != 0 && clusters.length != 0) {
+          FetchData();
+        }
+      }, [users, clusters])
 
       const calculateDistance = (lat_1, long_1, lat_2, long_2) => {
       
