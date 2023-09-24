@@ -131,12 +131,17 @@ function Map(props) {
       </GoogleMap>
       )}
 
+
+{props.ShowSusMap &&
+  <>
 <br/>
 <div className='mx-36 my-0'>
 
 <div className='flex justify-end w-full mr-36'>
   <span className="self-center text-md font-bold whitespace-nowrap">Susceptibility Map</span>
 </div>
+
+
 
 <br/>
 <TransformWrapper>
@@ -145,7 +150,8 @@ function Map(props) {
   </TransformComponent>
 </TransformWrapper>
 </div>
-
+</>
+}
     </div>
   );
 }

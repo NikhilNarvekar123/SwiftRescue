@@ -190,6 +190,7 @@ function Dashboard() {
     
     <Map center={center}
         markers={floodMarkers}
+        ShowSusMap={true}
       />
     }
     </div>
