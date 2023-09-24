@@ -19,10 +19,10 @@ function Map(props) {
     
       const [map, setMap] = React.useState(null)
       const onLoad = React.useCallback(function callback(map) {
-        const infowindow = new window.google.maps.InfoWindow({
-            // content: "Hi",
-            ariaLabel: "Uluru",
-          });
+        // const infowindow = new window.google.maps.InfoWindow({
+        //     // content: "Hi",
+        //     ariaLabel: "Uluru",
+        //   });
 
         const bounds = new window.google.maps.LatLngBounds(props.center);
 
@@ -30,6 +30,7 @@ function Map(props) {
         map.setZoom(10)
           console.log("props center", props.center)
           console.log("props", props)
+          console.log(props.markers)
         for (var i = 0; i < props.markers.length; i++) {
             console.log(props.markers[i].lat)
             var prop = props.markers[i]
@@ -37,18 +38,23 @@ function Map(props) {
             var lng = prop.lng
             var latLng = {lat: lat, lng: lng}
             // Creating a marker and putting it on the map
-            // console.log("latling")
+            console.log("latling")
             var marker = new window.google.maps.Marker({
                 position: latLng,
                 map: map,
                 title: prop.notes
             });
-            window.google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
-                return function() {
-                    infowindow.setContent(content);
-                    infowindow.open(map,marker);
-                };
-            })(marker, prop.notes,infowindow));  
+            console.log("notes", prop.notes)
+            const infowindow = new window.google.maps.InfoWindow({
+                content: prop.notes,
+                ariaLabel: "Uluru",
+              });
+            marker.addListener("click", () => {
+                infowindow.open({
+                  anchor: marker,
+                  map,
+                });
+              }); 
             // marker.addListener("click", () => {
             //     infowindow.setContent("Hi");
             //     infowindow.open({
@@ -71,11 +77,28 @@ function Map(props) {
       useEffect(() => {
         if (map) {
           const bounds = new window.google.maps.LatLngBounds(props.center);
+          console.log("map", props.markers)
           props.markers.map(marker => {
+            console.log("marker in map", marker.notes)
             bounds.extend({
               lat: marker.lat,
               lng: marker.lng,
             });
+            const infowindow = new window.google.maps.InfoWindow({
+                content: marker.notes,
+                ariaLabel: "Uluru",
+              });
+            const mark = new window.google.maps.Marker({
+                position: {lat: marker.lat, lng: marker.lng},
+                map,
+                title: "Uluru",
+              });
+              mark.addListener("click", () => {
+                infowindow.open({
+                  anchor: mark,
+                  map,
+                });
+              }); 
           });
         //   map.fitBounds(bounds);
           map.setZoom(10)
