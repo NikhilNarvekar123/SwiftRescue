@@ -40,40 +40,40 @@ function MapResponder() {
 //         { location: { lat: 29.7274, lng: -95.4015 }, stopover: true }, // Waypoint 2
 //       ];
 
-    const customRoute = [
-        {
-          location: { lat: 29.61833694775288, lng: -95.17666382886463 },
-          stopover: true,
-        },
-        {
-          location: { lat: 29.61833694775288, lng: -95.17666382886463 },
-          stopover: true,
-        },
-        {
-          location: { lat: 29.61833694775288, lng: -95.17666382886463 },
-          stopover: true,
-        },
-        {
-          location: { lat: 29.61833694775288, lng: -95.17666382886463 },
-          stopover: true,
-        },
-        {
-          location: { lat: 29.61833694775288, lng: -95.17666382886463 },
-          stopover: true,
-        },
-        {
-          location: { lat: 29.61833694775288, lng: -95.17666382886463 },
-          stopover: true,
-        },
-        {
-          location: { lat: 29.61833694775288, lng: -95.17666382886463 },
-          stopover: true,
-        },
-        {
-          location: { lat: 29.61833694775288, lng: -95.17666382886463 },
-          stopover: true,
-        },
-      ]
+    // const customRoute = [
+    //     {
+    //       location: { lat: 29.61833694775288, lng: -95.17666382886463 },
+    //       stopover: true,
+    //     },
+    //     {
+    //       location: { lat: 29.61833694775288, lng: -95.17666382886463 },
+    //       stopover: true,
+    //     },
+    //     {
+    //       location: { lat: 29.61833694775288, lng: -95.17666382886463 },
+    //       stopover: true,
+    //     },
+    //     {
+    //       location: { lat: 29.61833694775288, lng: -95.17666382886463 },
+    //       stopover: true,
+    //     },
+    //     {
+    //       location: { lat: 29.61833694775288, lng: -95.17666382886463 },
+    //       stopover: true,
+    //     },
+    //     {
+    //       location: { lat: 29.61833694775288, lng: -95.17666382886463 },
+    //       stopover: true,
+    //     },
+    //     {
+    //       location: { lat: 29.61833694775288, lng: -95.17666382886463 },
+    //       stopover: true,
+    //     },
+    //     {
+    //       location: { lat: 29.61833694775288, lng: -95.17666382886463 },
+    //       stopover: true,
+    //     },
+    //   ]
       
 
     useEffect(() => {
@@ -97,14 +97,15 @@ function MapResponder() {
 
         const FetchData = async () => {
           let coordinates = []
-          for (const user of users) {
+          for (var i = 0; i < users.length; i += 1) {
+            const user = users[i]
             coordinates.push([user['location']['lat'], user['location']['long']])
           }
 
           let data = [];
           axios.post('https://shreyj1729--swift-rescue-compute-clusters.modal.run', {
             "coordinates": coordinates,
-            "k": 7
+            "k": 12
           })
           .then(function (response) {
             data = response;
@@ -186,7 +187,7 @@ function MapResponder() {
         var param = center
         // console.log("coords", param)
         var markers = []
-        for (var i = 0; i < 50; i += 1) { // users.length but shortened
+        for (var i = 0; i < 100; i += 1) { // users.length but shortened
             var user = users[i]
             var dist = calculateDistance(param.lat, param.lng, user.location.lat, user.location.long)
             // console.log(user.)
@@ -257,8 +258,8 @@ function MapResponder() {
         </div>
         </div>
 
-          <div>{console.log("route here", route)}</div>
-          <div>{console.log("custom here", customRoute)}</div>
+          {/* <div>{console.log("route here", route)}</div> */}
+          {/* <div>{console.log("custom here", customRoute)}</div> */}
       {!floodsLoaded ? 
     <h1>Finding Users</h1> :
     <div>

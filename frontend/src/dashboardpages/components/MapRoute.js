@@ -4,11 +4,14 @@ import React, { useState } from 'react'
 import { useEffect } from "react";
 
 const containerStyle = {
-    height: '700px',
-    width: '700px',
-    marginTop: '50px',
+    height: '600px',
+    width: '1075px',
+    marginTop: '30px',
     marginRight: 'auto',
     marginLeft:'auto',
+    border: '2px solid',
+    borderColor: '#777777',
+    borderRadius: '10px'
   };
   
 function MapRoute(props) {
@@ -94,6 +97,7 @@ function MapRoute(props) {
                 position: {lat: marker.lat, lng: marker.lng},
                 map,
                 title: "Uluru",
+                // icon: markerIcon,
               });
               mark.addListener("click", () => {
                 infowindow.open({

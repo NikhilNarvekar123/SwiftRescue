@@ -131,6 +131,7 @@ function Map(props) {
         }
       }, [map, props.markers]);
 
+
   return (
     <div className="">
             {!isLoaded ? (
