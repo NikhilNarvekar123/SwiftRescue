@@ -26,8 +26,8 @@ function Map(props) {
 
         const bounds = new window.google.maps.LatLngBounds(props.center);
 
-        map.fitBounds(bounds);
-        // map.setZoom(10)
+        // map.fitBounds(bounds);
+        map.setZoom(10)
           console.log("props center", props.center)
           console.log("props", props)
         for (var i = 0; i < props.markers.length; i++) {
@@ -37,7 +37,7 @@ function Map(props) {
             var lng = prop.lng
             var latLng = {lat: lat, lng: lng}
             // Creating a marker and putting it on the map
-            console.log("latling")
+            // console.log("latling")
             var marker = new window.google.maps.Marker({
                 position: latLng,
                 map: map,
@@ -57,7 +57,7 @@ function Map(props) {
             //     });
             //   });
 
-              bounds.extend(latLng)
+            //   bounds.extend(latLng)
 
         }
     
@@ -77,7 +77,7 @@ function Map(props) {
               lng: marker.lng,
             });
           });
-          map.fitBounds(bounds);
+        //   map.fitBounds(bounds);
           map.setZoom(10)
         }
       }, [map, props.markers]);

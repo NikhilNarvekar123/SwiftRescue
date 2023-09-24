@@ -71,15 +71,15 @@ function MapPage() {
     var param = center
     // console.log("coords", param)
     var markers = []
-    for (var i = 0; i < 100; i++) { // users.length but shortened
+    for (var i = 0; i < 5000; i += 100) { // users.length but shortened
         var user = users[i]
         var dist = calculateDistance(param.lat, param.lng, user.location.lat, user.location.long)
         // console.log(user.)
         // console.log("lats", param.lat, param.lng, user.lat, user.lon)
-        if (dist < 50) { // 200 km
-                    console.log("add marker")
+        if (dist < 20) { // 200 km
+                    // console.log("add marker")
                     markers.push({lat: user.location.lat, lng: user.location.long})
-                    console.log(markers)
+                    // console.log(markers)
                     // setFloodMarkers((prevMarkers) => [...prevMarkers, { lat: flood.lat, lng: flood.lon }]);
         }
         setUserMarkers(markers)
@@ -124,7 +124,7 @@ function MapPage() {
             Find users
           </button>
     {!floodsLoaded ? 
-    <h1>Finding Floods</h1> :
+    <h1>Finding Users</h1> :
     <Map center={center}
         markers={userMarkers}
       />
