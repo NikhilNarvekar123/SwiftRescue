@@ -14,8 +14,6 @@ function Dashboard() {
     const [floodsLoaded, setFloodsLoaded] = useState(false);
     const [searchInput, setSearchInput] = useState("");
 
-    const [someMarkers, setSomeMarkers] = useState([]);
-
   useEffect(() => {
     const query = ref(db, "dashboard_floods");
     return onValue(query, (snapshot) => {
@@ -24,9 +22,9 @@ function Dashboard() {
       if (snapshot.exists()) {
         Object.values(data).map((flood) => {
           setFloods((floods) => [...floods, flood]);
-        //   setFloodMarkers((floodMarkers) => [...floodMarkers, {lat: flood.lat, lng: flood.lon}]);
+          setFloodMarkers((floodMarkers) => [...floodMarkers, {lat: flood.lat, lng: flood.lon}]);
         });
-        // setFloodsLoaded(true)
+        setFloodsLoaded(true)
       }
     });
   }, []);
@@ -67,32 +65,13 @@ function Dashboard() {
     for (var i = 0; i < floods.length; i++) {
         var flood = floods[i]
         var dist = calculateDistance(param.lat, param.lng, flood.lat, flood.lon)
-        if (dist < 500) {
+        if (dist < 200) { // 100 km
                     console.log("add marker")
                     markers.push({lat: flood.lat, lng: flood.lon})
                     // setFloodMarkers((prevMarkers) => [...prevMarkers, { lat: flood.lat, lng: flood.lon }]);
         }
         setFloodMarkers(markers)
     }
-    // const query = ref(db, "dashboard_floods");
-    // return onValue(query, (snapshot) => {
-    //   const data = snapshot.val();
-    //     var markers = []
-    //   if (snapshot.exists()) {
-    //     Object.values(data).map((flood) => {
-    //         var dist = calculateDistance(param.lat, param.lng, flood.lat, flood.lon)
-    //       if (dist < 500) {
-    //         console.log("add marker")
-    //         markers.push({lat: flood.lat, lng: flood.lon})
-    //         // setFloodMarkers((floodMarkers) => [...floodMarkers, {lat: flood.lat, lng: flood.lon}]);
-    //       }
-    //     //   setFloodMarkers((floodMarkers) => [...floodMarkers, {lat: flood.lat, lng: flood.lon}]);
-    //     });
-    //     // setFloodsLoaded(true)
-    //   }
-    // //   setSomeMarkers(markers)
-    // setFloodMarkers(markers)
-    // });
   }
 
 //   useEffect(() => {
@@ -150,7 +129,6 @@ function Dashboard() {
     <Map center={center}
         markers={floodMarkers}
       />
-    // {mapz}
     }
 
     </div>
