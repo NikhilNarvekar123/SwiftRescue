@@ -15,6 +15,14 @@ const containerStyle = {
     borderColor: '#777777',
     borderRadius: '10px'
   };
+
+const mobileContainer = {
+  height: '600px',
+  width: '100%',
+  marginTop: '30px',
+  border: '2px solid',
+  borderColor: '#777777',
+}
   
 function Map(props) {
 
@@ -118,7 +126,7 @@ function Map(props) {
         <h1>Loading...</h1>
       ) : (
         <GoogleMap
-        mapContainerStyle={containerStyle}
+        mapContainerStyle={props.ForMobile ? mobileContainer : containerStyle}
         center={props.center}
         zoom={10}
         onLoad={onLoad}
