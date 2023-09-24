@@ -25,16 +25,54 @@ function MapResponder() {
     const [userMap, setUserMap] = useState(true)
     const [clusters, setClusters] = useState([])
     const [route_waypoints, setWaypoints] = useState([])
+    const [route, setRoute] = useState([])
     const [route_length, setLength] = useState(0)
+    const [foundRoute, setFoundRoute] = useState(false)
+
+//     const customRoute = [
+//         // { lat: 29.7174, lng: -95.3918 },
+// //   { lat: 29.7074, lng: -95.4018 },
+// //   { lat: 29.7274, lng: -95.4015 },
+//         { location: { lat: 29.7174, lng: -95.3918 }, stopover: true }, // Start point
+//         { location: { lat: 29.7074, lng: -95.4018 }, stopover: true }, // Waypoint 1
+//         { location: { lat: 29.7274, lng: -95.4015 }, stopover: true }, // Waypoint 2
+//       ];
 
     const customRoute = [
-        // { lat: 29.7174, lng: -95.3918 },
-//   { lat: 29.7074, lng: -95.4018 },
-//   { lat: 29.7274, lng: -95.4015 },
-        { location: { lat: 29.7174, lng: -95.3918 }, stopover: true }, // Start point
-        { location: { lat: 29.7074, lng: -95.4018 }, stopover: true }, // Waypoint 1
-        { location: { lat: 29.7274, lng: -95.4015 }, stopover: true }, // Waypoint 2
-      ];
+        {
+          location: { lat: 29.61833694775288, lng: -95.17666382886463 },
+          stopover: true,
+        },
+        {
+          location: { lat: 29.61833694775288, lng: -95.17666382886463 },
+          stopover: true,
+        },
+        {
+          location: { lat: 29.61833694775288, lng: -95.17666382886463 },
+          stopover: true,
+        },
+        {
+          location: { lat: 29.61833694775288, lng: -95.17666382886463 },
+          stopover: true,
+        },
+        {
+          location: { lat: 29.61833694775288, lng: -95.17666382886463 },
+          stopover: true,
+        },
+        {
+          location: { lat: 29.61833694775288, lng: -95.17666382886463 },
+          stopover: true,
+        },
+        {
+          location: { lat: 29.61833694775288, lng: -95.17666382886463 },
+          stopover: true,
+        },
+        {
+          location: { lat: 29.61833694775288, lng: -95.17666382886463 },
+          stopover: true,
+        },
+      ]
+      
 
     useEffect(() => {
         const query = ref(db, "users");
@@ -64,7 +102,7 @@ function MapResponder() {
           let data = [];
           axios.post('https://shreyj1729--swift-rescue-compute-clusters.modal.run', {
             "coordinates": coordinates,
-            "k": 50
+            "k": 7
           })
           .then(function (response) {
             data = response;
@@ -86,7 +124,7 @@ function MapResponder() {
         const FetchData = async () => {
 
           let data = [];
-          axios.post('https://shreyj1729--swift-rescue-find-shortest-path-dev.modal.run', {
+          axios.post('https://shreyj1729--swift-rescue-find-shortest-path.modal.run', {
             "cluster_coordinates": clusters,
             "start_coord": [clusters[0][0], clusters[0][1]]
           })
@@ -106,6 +144,13 @@ function MapResponder() {
           FetchData();
         }
       }, [users, clusters])
+
+      useEffect(() => {
+        if (!foundRoute) {
+            calcRoute();
+            setFoundRoute(false)
+        }
+      }, [route_waypoints]);
 
       const calculateDistance = (lat_1, long_1, lat_2, long_2) => {
       
@@ -152,6 +197,24 @@ function MapResponder() {
         }
       }
 
+      const calcRoute = () => {
+        var mock = []
+        if (route_waypoints.length > 0) {
+            for (var i = 0; i < route_waypoints.length; i += 1) {
+                // format
+                // { location: { lat: 29.7174, lng: -95.3918 }, stopover: true }
+                console.log("latlng", route_waypoints[i][0], route_waypoints[i][1])
+                mock.push({location: { lat: route_waypoints[i][0], lng: route_waypoints[i][1]}, stopover: true})
+                // setRoute((route) => [...route, {location: { lat: route_waypoints[i][0], lng: route_waypoints[i][1]}, stopover: true}])
+            }
+            setRoute(mock)
+            console.log("pls", route)
+        }
+
+      }
+      console.log("cluster", clusters)
+      console.log("waypoint", route_waypoints)
+
   return (
     <div className="App">
       <DashboardHeader/>
@@ -160,6 +223,9 @@ function MapResponder() {
             Find users
           </button>
           </div>
+
+          <div>{console.log("route here", route)}</div>
+          <div>{console.log("custom here", customRoute)}</div>
       {!floodsLoaded ? 
     <h1>Finding Users</h1> :
     <div>
@@ -176,7 +242,7 @@ function MapResponder() {
   <MapRoute
     center={center}
     markers={userMarkers}
-    route={customRoute}
+    route={route}
   />
 )}
 <Toggle

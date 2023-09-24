@@ -103,14 +103,51 @@ function MapRoute(props) {
               }); 
           });
         //   map.fitBounds(bounds);
-          map.setZoom(10)
+        //   map.setZoom(10)
         }
       }, [map, props.markers]);
+
+      useEffect(() => {
+        if (map) {
+          const bounds = new window.google.maps.LatLngBounds(props.center);
+          console.log("map", props.route)
+          props.route.map((r, index) => {
+            var marker = r.location
+            bounds.extend({
+              lat: marker.lat,
+              lng: marker.lng,
+            });
+            const infowindow = new window.google.maps.InfoWindow({
+                content: "",
+                ariaLabel: "Uluru",
+              });
+            const mark = new window.google.maps.Marker({
+                position: {lat: marker.lat, lng: marker.lng},
+                map,
+                label: { text: `${index + 1}`,
+                // text: `${index + 1}`,
+                fontSize: '16px', // Set the desired font size for the label
+                fontWeight: 'bold' }, // Marker label with waypoint index
+                title: `Marker ${index + 1}`,
+                icon: markerIcon,
+              });
+              mark.addListener("click", () => {
+                infowindow.open({
+                  anchor: mark,
+                  map,
+                });
+              }); 
+          });
+        //   map.fitBounds(bounds);
+        //   map.setZoom(10)
+        }
+      }, [map, props.route]);
 
       const directionsCallback = (response) => {
         if (response !== null) {
           if (response.status === 'OK') {
             setResponse(response);
+            // console.log("WORKS", response)
           } else {
             console.log('Directions request failed:', response.status);
           }
@@ -118,7 +155,21 @@ function MapRoute(props) {
       };
 
 
-      const customRoute = props.route;
+    //   const [customRoute, setCustomRoute] = useState([])
+    //   const [foundRoute, setFoundRoute] = useState(false)
+    //   useEffect(() => {
+    //     if (!foundRoute) {
+    //         // calcRoute();
+    //         setFoundRoute(true)
+    //     }
+    //   }, []);
+    const markerIcon = {
+        path: window.google.maps.SymbolPath.CIRCLE,
+        fillColor: 'red', // Change this to your desired color
+        fillOpacity: 0.5,
+        strokeWeight: 0,
+        scale: 20, // Adjust the size of the marker
+      };
 
   return (
     <div className="Map">
@@ -132,25 +183,34 @@ function MapRoute(props) {
         onLoad={onLoad}
         onUnmount={onUnmount}
       >
+        {/* {props.route.map((waypoint, index) => (
+          <Marker
+            key={index}
+            position={{ lat: waypoint.lat, lng: waypoint.lng }}
+            label={`${index + 1}`} // Marker label with waypoint index
+          />
+        ))} */}
         {props.markers.map(({ lat, lng }) => (
             <Marker position={{ lat, lng }} />
           ))}
         <></>
+        <div>{console.log("log", props.route)}</div>
         <DirectionsService
           options={{
-            waypoints: customRoute.slice(1, -1).map((waypoint) => ({
+            waypoints: props.route.slice(1, -1).map((waypoint) => ({
                 location: waypoint.location,
                 stopover: waypoint.stopover,
               })),
-            destination: customRoute[customRoute.length - 1].location,
-            origin: customRoute[0].location,    
-            travelMode: 'DRIVING',
+            destination: props.route[props.route.length - 1].location,
+            origin: props.route[0].location,    
+            travelMode: window.google.maps.TravelMode.DRIVING,
           }}
           // Add a callback function to handle the response
           callback={directionsCallback}
         />
         <DirectionsRenderer
             options={{
+            preserveViewport: true,
               directions: response,
               suppressMarkers: true, // Suppress default markers (start and end)
               polylineOptions: {
@@ -160,9 +220,16 @@ function MapRoute(props) {
               },
             }}
           />
-          {props.markers.map(({ lat, lng }) => (
+          {/* {props.markers.map(({ lat, lng }) => (
             <Marker position={{ lat, lng }} />
-          ))}
+          ))} */}
+          {/* {props.route.map((waypoint, index) => (
+          <Marker
+            key={index}
+            position={{ lat: waypoint.lat, lng: waypoint.lng }}
+            label={`${index + 1}`} // Marker label with waypoint index
+          />
+        ))} */}
       </GoogleMap>
       )}
     </div>
