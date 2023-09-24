@@ -104,10 +104,10 @@ function MapResponder() {
       {!floodsLoaded ? 
     <h1>Finding Users</h1> :
     <div>
-        <Map 
+        {/* <Map 
         center={center}
         markers={userMarkers}
-      />
+      /> */}
     {/* {userMap ? <Map 
         center={center}
         markers={userMarkers}
@@ -116,11 +116,20 @@ function MapResponder() {
         center={center}
         markers={userMarkers}
         route={customRoute}
-      />} */}
-      {/* <Toggle
+      />}
+      <Toggle
       defaultChecked={userMap}
       onChange={setUserMap(false)}
       /> */}
+       <Map 
+        center={center}
+        markers={userMarkers}
+      />
+      <MapRoute
+        center={center}
+        markers={userMarkers}
+        route={customRoute}
+      />
       </div>
     }
     </div>
