@@ -3,8 +3,6 @@ import { db } from "../firebase";
 import { onValue, ref } from "firebase/database";
 import { useState, useEffect } from 'react';
 import Map from '../Map';
-// import firebase from 'firebase/app';
-import { getDatabase } from 'firebase/database';
 
 
 
@@ -77,25 +75,25 @@ function MapPage() {
 
   const calculateDistance = (lat_1, long_1, lat_2, long_2) => {
       
-  const toRadian = n => (n * Math.PI) / 180
-  
-      let lat2 = lat_2
-      let lon2 = long_2
-      let lat1 = lat_1
-      let lon1 = long_1
-  
-      let R = 6371  // km
-      let x1 = lat2 - lat1
-      let dLat = toRadian(x1)
-      let x2 = lon2 - lon1
-      let dLon = toRadian(x2)
-      let a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(toRadian(lat1)) * Math.cos(toRadian(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2)
-      let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-      let d = R * c
-    //   console.log("distance==?",d)
-      return d 
+    const toRadian = n => (n * Math.PI) / 180
+    
+        let lat2 = lat_2
+        let lon2 = long_2
+        let lat1 = lat_1
+        let lon1 = long_1
+    
+        let R = 6371  // km
+        let x1 = lat2 - lat1
+        let dLat = toRadian(x1)
+        let x2 = lon2 - lon1
+        let dLon = toRadian(x2)
+        let a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(toRadian(lat1)) * Math.cos(toRadian(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2)
+        let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+        let d = R * c
+      //   console.log("distance==?",d)
+        return d 
     }
 
   const findNearbyUsers = () => {
