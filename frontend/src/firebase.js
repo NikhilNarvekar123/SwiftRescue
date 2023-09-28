@@ -9,13 +9,13 @@ import { getDatabase } from "firebase/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAMQolx6MESzGcoxjqmkkxcybgyd6Fy7Xg",
-  authDomain: "swiftrescue-1168c.firebaseapp.com",
-  databaseURL: "https://swiftrescue-1168c-default-rtdb.firebaseio.com",
+  apiKey: "xxx",
+  authDomain: "xx",
+  databaseURL: "xx-default-rtdbxx.com",
   projectId: "swiftrescue-1168c",
   storageBucket: "swiftrescue-1168c.appspot.com",
   messagingSenderId: "588381670426",
-  appId: "1:588381670426:web:2bdb79fb7027d6beb2d5a3"
+  appId: "1:asd5asdasd88381asd670426:webasd:2basddasdbasd79fb70asd27d6dbeb2d5a3"
 };
 
 // Initialize Firebase
